@@ -10,9 +10,12 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+using Autofac;
+using CoffeeShare.Infrastructure.IoC;
 
-namespace CoffeShare
+namespace CoffeeShare
 {
     public class Startup
     {
@@ -32,6 +35,12 @@ namespace CoffeShare
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoffeShare", Version = "v1" });
             });
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            builder.RegisterModule<RepositoryModule>();
+            builder.RegisterModule<ServiceModule>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
