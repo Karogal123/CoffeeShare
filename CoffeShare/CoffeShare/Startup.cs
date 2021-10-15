@@ -1,3 +1,4 @@
+using System;
 using Autofac;
 using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.IoC;
@@ -38,6 +39,7 @@ namespace CoffeeShare
         {
             builder.RegisterModule<RepositoryModule>();
             builder.RegisterModule<ServiceModule>();
+            builder.RegisterAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CoffeeShare.Core.Models
 {
-    public class Coffee
+    public class CoffeeDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

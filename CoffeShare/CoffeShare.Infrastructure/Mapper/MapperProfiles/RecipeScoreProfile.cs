@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CoffeeShare.Core.Dto
+namespace CoffeeShare.Infrastructure.Mapper.MapperProfiles
 {
-    public class CoffeeDto
+    class RecipeScoreProfile
     {
-
     }
 }

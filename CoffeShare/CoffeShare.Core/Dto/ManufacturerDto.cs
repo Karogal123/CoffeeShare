@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace CoffeeShare.Core.Dto
 {
-    class ManufacturerDto
+    public class ManufacturerDto
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
