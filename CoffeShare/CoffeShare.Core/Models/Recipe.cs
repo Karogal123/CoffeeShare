@@ -13,6 +13,6 @@ namespace CoffeeShare.Core.Models
         public string Name { get; set; }
         public string RecipeBody { get; set; }
         public int UserId { get; set; }
-        public User Publisher { get; set; }
+        public IntendedUse IntendedUse { get; set; }
     }
 }

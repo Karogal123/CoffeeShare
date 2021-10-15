@@ -8,10 +8,11 @@ namespace CoffeeShare.Core.Models
 {
     public enum IntendedUse
     {
-        Aeropress,
         Espresso,
+        Aeropress,
         FrenchPress,
         Chemex,
-        V60
+        Dripper,
+        MokaPot
     }
 }
