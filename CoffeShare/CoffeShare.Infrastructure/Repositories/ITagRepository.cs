@@ -10,6 +10,7 @@ namespace CoffeeShare.Infrastructure.Repositories
     public interface ITagRepository : IRepository
     {
         Task<List<Tag>> GetAllTags();
+        Task<Tag> GetTagById(int id);
         Task CreateTag(Tag tag);
         Task DeleteCoffee(Tag tag);
         Task UpdateCoffee(Tag tag);

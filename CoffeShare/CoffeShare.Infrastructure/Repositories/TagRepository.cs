@@ -21,7 +21,7 @@ namespace CoffeeShare.Infrastructure.Repositories
         public async Task<List<Tag>> GetAllTags()
             => await _context.Tags.ToListAsync();
 
-        public async Task<Tag> GetTagById()
+        public async Task<Tag> GetTagById(int id)
             => await _context.Tags.SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task CreateTag(Tag tag)
