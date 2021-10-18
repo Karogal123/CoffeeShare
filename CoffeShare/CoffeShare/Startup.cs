@@ -1,5 +1,6 @@
 using System;
 using Autofac;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
 using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.IoC;
 using Microsoft.AspNetCore.Identity;

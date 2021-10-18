@@ -13,7 +13,7 @@ namespace CoffeeShare.Core.Dto
         public int RecipeId { get; set; }
         public RecipeDto Recipe { get; set; }
         public int UserId { get; set; }
-        public UserDto User { get; set; }
+        public User User { get; set; }
         public int Score { get; set; }
     }
 }
