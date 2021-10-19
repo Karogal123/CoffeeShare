@@ -1,11 +1,8 @@
-﻿using System;
+﻿using CoffeeShare.Core.Models;
+using CoffeeShare.Infrastructure.DataContext;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using CoffeeShare.Core.Models;
-using CoffeeShare.Infrastructure.DataContext;
 
 namespace CoffeeShare.Infrastructure.Repositories
 {
@@ -30,13 +27,13 @@ namespace CoffeeShare.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteCoffee(Tag tag)
+        public async Task DeleteTag(Tag tag)
         {
             _context.Tags.Remove(tag);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateCoffee(Tag tag)
+        public async Task UpdateTag(Tag tag)
         {
             _context.Tags.Update(tag);
             await _context.SaveChangesAsync();

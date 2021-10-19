@@ -1,12 +1,15 @@
-﻿using System;
+﻿using CoffeeShare.Core.Dto;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CoffeeShare.Infrastructure.Services
 {
-    class IRecipeService
+    public interface IRecipeService : IService
     {
+        Task<List<RecipeDto>> GetAllRecipes();
+        Task<RecipeDto> GetRecipeById(int id);
+        Task CreateRecipe(RecipeDto recipeDto);
+        Task DeleteRecipe(RecipeDto recipeDto);
+        Task UpdateRecipe(RecipeDto recipeDto, int id);
     }
 }

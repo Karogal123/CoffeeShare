@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CoffeeShare.Core.Dto;
 using CoffeeShare.Core.Models;
 using CoffeeShare.Infrastructure.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoffeeShare.Infrastructure.Services
 {
@@ -21,7 +18,7 @@ namespace CoffeeShare.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public async Task<List<CoffeeDto>> GetAllCoffee()
+        public async Task<List<CoffeeDto>> GetAllCoffees()
         {
             var coffeesModels = await _coffeeRepository.GetAllCoffees();
             return _mapper.Map<List<CoffeeDto>>(coffeesModels);

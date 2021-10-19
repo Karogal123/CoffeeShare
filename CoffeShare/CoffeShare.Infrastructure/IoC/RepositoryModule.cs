@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Autofac;
+using CoffeeShare.Infrastructure.Repositories;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using CoffeeShare.Infrastructure.Repositories;
 
 namespace CoffeeShare.Infrastructure.IoC
 {

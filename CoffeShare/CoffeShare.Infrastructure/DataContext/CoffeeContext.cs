@@ -1,6 +1,4 @@
 ﻿using CoffeeShare.Core.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShare.Infrastructure.DataContext
@@ -76,4 +74,3 @@ namespace CoffeeShare.Infrastructure.DataContext
         }
     }
 }
-    

@@ -1,9 +1,6 @@
-﻿using System;
+﻿using CoffeeShare.Core.Dto;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using CoffeeShare.Core.Dto;
 
 namespace CoffeeShare.Infrastructure.Services
 {
