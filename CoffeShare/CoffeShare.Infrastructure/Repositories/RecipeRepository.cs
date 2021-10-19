@@ -26,17 +26,20 @@ namespace CoffeeShare.Infrastructure.Repositories
 
         public async Task CreateRecipe(Recipe recipe)
         {
-            throw new NotImplementedException();
+            await _context.Recipes.AddAsync(recipe);
+            await _context.SaveChangesAsync();
         }
 
         public async Task DeleteRecipe(Recipe recipe)
         {
-            throw new NotImplementedException();
+            _context.Recipes.Remove(recipe);
+            await _context.SaveChangesAsync();
         }
 
         public async Task UpdateRecipe(Recipe recipe)
         {
-            throw new NotImplementedException();
+            _context.Recipes.Update(recipe);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace CoffeeShare.Infrastructure.Repositories
     public interface IRecipeRepository : IRepository
     {
         Task<List<Recipe>> GetAllRecipes();
-        Task<Recipe> GetRecipeById(int idx);
+        Task<Recipe> GetRecipeById(int id);
         Task CreateRecipe(Recipe recipe);
         Task DeleteRecipe(Recipe recipe);
         Task UpdateRecipe(Recipe recipe);
