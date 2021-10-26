@@ -13,5 +13,6 @@ namespace CoffeeShare.Infrastructure.Repositories.Interfaces
         Task<RecipeTag> GetRecipeTagById(int id);
         Task CreateRecipeTag(RecipeTag recipeTag);
         Task UpdateRecipeTag(RecipeTag recipeTag);
+        Task DeleteRecipeTag(RecipeTag recipeTag);
     }
 }
