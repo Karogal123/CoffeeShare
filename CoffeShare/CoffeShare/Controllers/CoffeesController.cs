@@ -1,8 +1,6 @@
 ﻿using CoffeeShare.Core.Dto;
 using CoffeeShare.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.IO.Enumeration;
 using System.Threading.Tasks;
 
 namespace CoffeeShare.Controllers
@@ -40,7 +38,7 @@ namespace CoffeeShare.Controllers
         public async Task<IActionResult> CreateCoffee(CoffeeDto coffeeDto)
         {
             await _coffeeService.CreateCoffee(coffeeDto);
-            return CreatedAtAction(nameof(GetCoffeeById), new {Id = coffeeDto.Id}, coffeeDto);
+            return CreatedAtAction(nameof(GetCoffeeById), new { Id = coffeeDto.Id }, coffeeDto);
         }
 
         [HttpDelete("{id}")]

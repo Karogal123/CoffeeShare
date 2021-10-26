@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using CoffeeShare.Core.Dto;
 using CoffeeShare.Core.Models;
 using CoffeeShare.Infrastructure.Repositories;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CoffeeShare.Infrastructure.Services
 {

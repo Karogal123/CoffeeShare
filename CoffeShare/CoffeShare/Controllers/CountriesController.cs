@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using CoffeeShare.Infrastructure.Services;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using CoffeeShare.Infrastructure.Services;
 
 namespace CoffeeShare.Controllers
 {

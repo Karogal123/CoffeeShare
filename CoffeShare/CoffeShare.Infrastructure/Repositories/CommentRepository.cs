@@ -1,11 +1,9 @@
-﻿using System;
+﻿using CoffeeShare.Core.Models;
+using CoffeeShare.Infrastructure.DataContext;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using CoffeeShare.Core.Models;
-using CoffeeShare.Infrastructure.DataContext;
 
 namespace CoffeeShare.Infrastructure.Repositories
 {
