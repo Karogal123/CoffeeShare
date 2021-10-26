@@ -2,6 +2,7 @@
 using CoffeeShare.Infrastructure.Services;
 using System.Linq;
 using System.Reflection;
+using CoffeeShare.Infrastructure.Services.Interfaces;
 
 namespace CoffeeShare.Infrastructure.IoC
 {
