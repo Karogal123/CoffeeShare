@@ -1,5 +1,6 @@
 ﻿using CoffeeShare.Core.Models;
 using CoffeeShare.Infrastructure.DataContext;
+using CoffeeShare.Infrastructure.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -18,6 +19,9 @@ namespace CoffeeShare.Infrastructure.Repositories
 
         public async Task<List<Comment>> GetAllCommentsForRecipe(int recipeId)
             => await _context.Comments.Where(x => x.RecipeId == recipeId).ToListAsync();
+
+        public async Task<Comment> GetCommentById(int id)
+            => await _context.Comments.SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task CreateComment(Comment comment)
         {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using CoffeeShare.Core.Dto;
 
 namespace CoffeeShare.Controllers
 {
@@ -19,7 +20,28 @@ namespace CoffeeShare.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCommentsForRecipe(int id)
         {
-            throw new NotImplementedException();
+            var comments = await _commentService.GetAllCommentsForRecipe(id);
+            return Ok(comments);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateComment(CommentDto commentDto)
+        {
+            await _commentService.CreateComment(commentDto);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteComment(int id)
+        {
+            var comment = await _commentService.GetCommentById(id);
+            if (comment is null)
+            {
+                return NotFound();
+            }
+
+            await _commentService.DeleteCoffee(comment);
+            return Ok();
         }
     }
 }

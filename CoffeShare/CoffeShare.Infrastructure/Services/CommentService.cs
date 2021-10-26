@@ -24,6 +24,12 @@ namespace CoffeeShare.Infrastructure.Services
             return _mapper.Map<List<CommentDto>>(comments);
         }
 
+        public async Task<CommentDto> GetCommentById(int id)
+        {
+            var comment = await _commentRepository.GetCommentById(id);
+            return _mapper.Map<CommentDto>(comment);
+        }
+
         public async Task CreateComment(CommentDto commentDto)
         {
             var comment = _mapper.Map<Comment>(commentDto);
