@@ -1,6 +1,7 @@
 ﻿using CoffeeShare.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CoffeeShare.Infrastructure.Services.Interfaces;
 
 namespace CoffeeShare.Controllers
 {

@@ -1,5 +1,6 @@
 ﻿using CoffeeShare.Core.Dto;
 using CoffeeShare.Infrastructure.Services;
+using CoffeeShare.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

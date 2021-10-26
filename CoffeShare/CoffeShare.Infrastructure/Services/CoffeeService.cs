@@ -4,6 +4,8 @@ using CoffeeShare.Core.Models;
 using CoffeeShare.Infrastructure.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoffeeShare.Infrastructure.Repositories.Interfaces;
+using CoffeeShare.Infrastructure.Services.Interfaces;
 
 namespace CoffeeShare.Infrastructure.Services
 {

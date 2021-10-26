@@ -10,7 +10,8 @@ namespace CoffeeShare.Infrastructure.Services.Interfaces
     public interface IRecipeScoreService : IService
     {
         Task<List<RecipeScoreDto>> GetScoresForRecipe(int id);
+        Task<RecipeScoreDto> GetRecipeScoreById(int id);
         Task CreateRecipeScore (RecipeScoreDto recipeScoreDto);
-        Task UpdateRecipeScore (RecipeScoreDto recipeScoreDto);
+        Task UpdateRecipeScore(RecipeScoreDto recipeScoreDto);
     }
 }

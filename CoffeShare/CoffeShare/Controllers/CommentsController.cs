@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Dto;
+using CoffeeShare.Infrastructure.Services.Interfaces;
 
 namespace CoffeeShare.Controllers
 {
@@ -17,10 +18,10 @@ namespace CoffeeShare.Controllers
             _commentService = commentService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllCommentsForRecipe(int id)
+        [HttpGet("{recipeId}")]
+        public async Task<IActionResult> GetAllCommentsForRecipe(int recipeId)
         {
-            var comments = await _commentService.GetAllCommentsForRecipe(id);
+            var comments = await _commentService.GetAllCommentsForRecipe(recipeId);
             return Ok(comments);
         }
 
