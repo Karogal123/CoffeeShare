@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CoffeeShare.Infrastructure.Services
+namespace CoffeeShare.Infrastructure.Services.Interfaces
 {
     public interface IManufacturerService : IService
     {

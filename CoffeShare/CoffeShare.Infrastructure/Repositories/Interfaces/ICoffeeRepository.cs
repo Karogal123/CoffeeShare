@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CoffeeShare.Infrastructure.Repositories
+namespace CoffeeShare.Infrastructure.Repositories.Interfaces
 {
     public interface ICoffeeRepository : IRepository
     {

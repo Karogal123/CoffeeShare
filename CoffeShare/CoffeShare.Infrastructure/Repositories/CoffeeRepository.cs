@@ -3,6 +3,7 @@ using CoffeeShare.Infrastructure.DataContext;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CoffeeShare.Infrastructure.Repositories.Interfaces;
 
 namespace CoffeeShare.Infrastructure.Repositories
 {
