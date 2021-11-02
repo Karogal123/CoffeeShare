@@ -20,10 +20,10 @@ namespace CoffeeShare.Infrastructure.Repositories
         }
 
         public async Task<List<RecipeTag>> GetTagsForRecipe(int recipeId)
-            => await _context.RecipeTags.Where(x => x.RecipeId == recipeId).ToListAsync();
+            => await _context.RecipeTags.Include(x => x.Recipe).Include(x => x.Tag).Where(x => x.RecipeId == recipeId).ToListAsync();
 
         public async Task<RecipeTag> GetRecipeTagById(int id)
-            => await _context.RecipeTags.SingleOrDefaultAsync(x => x.Id == id);
+            => await _context.RecipeTags.Include(x => x.Recipe).Include(x => x.Tag).SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task CreateRecipeTag(RecipeTag recipeTag)
         {

@@ -18,10 +18,10 @@ namespace CoffeeShare.Infrastructure.Repositories
         }
 
         public async Task<List<Comment>> GetAllCommentsForRecipe(int recipeId)
-            => await _context.Comments.Where(x => x.RecipeId == recipeId).ToListAsync();
+            => await _context.Comments.Include(x => x.User).Include(x => x.Recipe).Where(x => x.RecipeId == recipeId).ToListAsync();
 
         public async Task<Comment> GetCommentById(int id)
-            => await _context.Comments.SingleOrDefaultAsync(x => x.Id == id);
+            => await _context.Comments.Include(x => x.User).Include(x => x.Recipe).SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task CreateComment(Comment comment)
         {

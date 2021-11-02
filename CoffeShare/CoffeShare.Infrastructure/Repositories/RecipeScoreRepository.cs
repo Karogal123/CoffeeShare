@@ -19,11 +19,11 @@ namespace CoffeeShare.Infrastructure.Repositories
         }
 
         public async Task<List<RecipeScore>> GetAllScoresForRecipe(int id)
-            => await _context.RecipeScores.Where(x => x.RecipeId == id).ToListAsync();
+            => await _context.RecipeScores.Include(x => x.Recipe).Include(x => x.User).Where(x => x.RecipeId == id).ToListAsync();
 
         public async Task<RecipeScore> GetRecipeScoreById(int id)
-            => await _context.RecipeScores.SingleOrDefaultAsync(x => x.Id == id);
-
+            => await _context.RecipeScores.Include(x => x.Recipe).Include(x => x.User).SingleOrDefaultAsync(x => x.Id == id);
+        
         public async Task CreateRecipeScore(RecipeScore recipeScore)
         {
             await _context.AddAsync(recipeScore);

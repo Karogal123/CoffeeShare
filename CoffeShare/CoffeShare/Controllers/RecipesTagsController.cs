@@ -29,7 +29,7 @@ namespace CoffeeShare.Controllers
             {
                 return NotFound();
             }
-            var recipeTags = _recipeTagService.GetTagsForRecipe(recipeId);
+            var recipeTags = await _recipeTagService.GetTagsForRecipe(recipeId);
             return Ok(recipeTags);
         }
 

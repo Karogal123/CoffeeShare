@@ -31,7 +31,7 @@ namespace CoffeeShare.Controllers
                 return NotFound();
             }
 
-            var scores = _recipeScoreService.GetScoresForRecipe(recipeId);
+            var scores = await _recipeScoreService.GetScoresForRecipe(recipeId);
             return Ok(scores);
         }
 
