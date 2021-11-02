@@ -1,7 +1,10 @@
-﻿namespace CoffeeShare.Core.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CoffeeShare.Core.Models
 {
     public class Manufacturer
     {
+        [Key]
         public int Id { get; set; }
         public string Name { get; set; }
     }

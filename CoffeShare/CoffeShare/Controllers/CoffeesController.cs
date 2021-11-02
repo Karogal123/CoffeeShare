@@ -3,9 +3,11 @@ using CoffeeShare.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CoffeeShare.Infrastructure.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoffeeShare.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("Coffee")]
     public class CoffeesController : ControllerBase
