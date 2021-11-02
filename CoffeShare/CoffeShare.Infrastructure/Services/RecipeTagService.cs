@@ -5,44 +5,52 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CoffeeShare.Core.Dto;
+using CoffeeShare.Core.Models;
+using CoffeeShare.Infrastructure.Repositories.Interfaces;
 using CoffeeShare.Infrastructure.Services.Interfaces;
 
 namespace CoffeeShare.Infrastructure.Services
 {
     public class RecipeTagService : IRecipeTagService
     {
-        private readonly IRecipeTagService _recipeTagService;
+        private readonly IRecipeTagRepository _recipeTagRepository;
         private readonly IMapper _mapper;
 
-        public RecipeTagService(IMapper mapper, IRecipeTagService recipeTagService)
+        public RecipeTagService(IMapper mapper, IRecipeTagRepository recipeTagRepository)
         {
             _mapper = mapper;
-            _recipeTagService = recipeTagService;
+            _recipeTagRepository = recipeTagRepository;
         }
 
         public async Task<List<RecipeTagDto>> GetTagsForRecipe(int recipeId)
         {
-            throw new NotImplementedException();
+            var recipeTags = await _recipeTagRepository.GetTagsForRecipe(recipeId);
+            return _mapper.Map<List<RecipeTagDto>>(recipeTags);
         }
 
         public async Task<RecipeTagDto> GetRecipeTagById(int id)
         {
-            throw new NotImplementedException();
+            var recipeTag = await _recipeTagRepository.GetRecipeTagById(id);
+            return _mapper.Map<RecipeTagDto>(recipeTag);
         }
 
         public async Task CreateRecipeTag(RecipeTagDto recipeTagDto)
         {
-            throw new NotImplementedException();
+            var recipeTag = _mapper.Map<RecipeTag>(recipeTagDto);
+            await _recipeTagRepository.CreateRecipeTag(recipeTag);
         }
 
         public async Task UpdateRecipeTag(RecipeTagDto recipeTagDto)
         {
-            throw new NotImplementedException();
+            var recipeTag = await _recipeTagRepository.GetRecipeTagById(recipeTagDto.Id);
+            var recipeTagUpdate = _mapper.Map(recipeTag, recipeTag);
+            await _recipeTagRepository.UpdateRecipeTag(recipeTagUpdate);
         }
 
         public async Task DeleteRecipeTag(RecipeTagDto recipeTagDto)
         {
-            throw new NotImplementedException();
+            var recipeTag =  _mapper.Map<RecipeTag>(recipeTagDto);
+            await _recipeTagRepository.DeleteRecipeTag(recipeTag);
         }
     }
 }
