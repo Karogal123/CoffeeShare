@@ -9,5 +9,7 @@ namespace CoffeeShare.Core.Dto
         public string RecipeBody { get; set; }
         public int UserId { get; set; }
         public IntendedUse IntendedUse { get; set; }
+        public int CoffeeId { get; set; }
+        public Coffee Coffee { get; set; }
     }
 }
