@@ -1,6 +1,5 @@
 using Autofac;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
-using CoffeeShare.Infrastructure.Auth;
 using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.IoC;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -15,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
+using CoffeeShare.Core.Models;
 
 namespace CoffeeShare
 {
@@ -32,9 +32,9 @@ namespace CoffeeShare
         {
             services.AddDbContext<CoffeeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CoffeeConnection"),
                 b => b.MigrationsAssembly("CoffeeShare.Infrastructure")));
-            services.AddIdentityCore<IdentityUser>()
+            services.AddIdentity<User, UserRole>(cfg => 
+                    cfg.User.RequireUniqueEmail = true)
                 .AddEntityFrameworkStores<CoffeeContext>();
-            services.AddOptions();
             services.AddOptions();
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -64,28 +64,6 @@ namespace CoffeeShare
 
             });
 
-            var jwtSettings = new JwtSettings();
-            Configuration.Bind(nameof(jwtSettings), jwtSettings);
-            services.AddSingleton(jwtSettings);
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-               .AddJwtBearer(opt =>
-               {
-                   opt.SaveToken = true;
-                   opt.TokenValidationParameters = new TokenValidationParameters
-                   {
-                       ValidateIssuerSigningKey = true,
-                       IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                       ValidateIssuer = false,
-                       ValidateAudience = false,
-                       RequireExpirationTime = false,
-                       ValidateLifetime = true
-                   };
-               });
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

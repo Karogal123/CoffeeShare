@@ -5,10 +5,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShare.Infrastructure.DataContext
 {
-    public class CoffeeContext : IdentityDbContext<IdentityUser>
+    public class CoffeeContext : IdentityDbContext<User, UserRole, int>
     {
         public CoffeeContext(DbContextOptions<CoffeeContext> opt) : base(opt) { }
 
+        public CoffeeContext()
+        {
+            
+        }
         public DbSet<Coffee> Coffees { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -17,7 +21,5 @@ namespace CoffeeShare.Infrastructure.DataContext
         public DbSet<RecipeScore> RecipeScores { get; set; }
         public DbSet<RecipeTag> RecipeTags { get; set; }
         public DbSet<Tag> Tags { get; set; }
-
-       
     }
 }

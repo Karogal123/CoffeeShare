@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using CoffeeShare.Core.Models;
-using CoffeeShare.Infrastructure.Auth;
 using CoffeeShare.Infrastructure.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoffeeShare.Controllers
 {
@@ -14,51 +14,62 @@ namespace CoffeeShare.Controllers
     [Route("users")]
     public class UsersController : ControllerBase
     {
-        private readonly IUserRepository _repository;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController(IUserRepository repository, IMapper mapper)
+        public UsersController(SignInManager<User> signInManager, UserManager<User> userManager)
         {
-            _repository = repository;
-        }
-
-        [HttpPost]
-        [Route("Register")]
-        public async Task<IActionResult> Register(User user)
-        {
-            var authResponse = await _repository.RegisterAsync(user);
-
-            if (!authResponse.Success)
-            {
-                return BadRequest(new AuthFailedResponse
-                {
-                    Errors = authResponse.Errors
-                });
-            }
-
-            return Ok(new AuthSuccessResponse
-            {
-                Token = authResponse.Token
-            });
+            _signInManager = signInManager;
+            _userManager = userManager;
         }
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login(User user)
+        public async Task<IActionResult> Login(string email, string password)
         {
-            var authResponse = await _repository.LoginAsync(user);
-
-            if (!authResponse.Success)
+            if (ModelState.IsValid)
             {
-                return BadRequest(new AuthFailedResponse
+                var result = await _signInManager.PasswordSignInAsync(email, password, true, false);
+                if (result.Succeeded)
                 {
-                    Errors = authResponse.Errors
-                });
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
 
-            return Ok(new AuthSuccessResponse
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("Register")]
+        public async Task<IActionResult> Register(string email, string password)
+        {
+            if (ModelState.IsValid)
             {
-                Token = authResponse.Token
-            });
+                var user = new User() {UserName = email, Email = email};
+                var result = await _userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    return Ok();
+                }
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            if (ModelState.IsValid)
+            {
+                await _signInManager.SignOutAsync();
+            }
+
+            return Ok();
         }
     }
 }
