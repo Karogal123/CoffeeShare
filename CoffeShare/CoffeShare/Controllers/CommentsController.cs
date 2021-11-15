@@ -18,7 +18,7 @@ namespace CoffeeShare.Controllers
             _commentService = commentService;
         }
 
-        [HttpGet("{recipeId}")]
+        [HttpGet]
         public async Task<IActionResult> GetAllCommentsForRecipe(int recipeId)
         {
             var comments = await _commentService.GetAllCommentsForRecipe(recipeId);

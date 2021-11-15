@@ -22,7 +22,7 @@ namespace CoffeeShare.Controllers
             _recipeService = recipeService;
         }
 
-        [HttpGet("{recipeId}")]
+        [HttpGet]
         public async Task<IActionResult> GetScoresForRecipe(int recipeId)
         {
             var recipe = await _recipeService.GetRecipeById(recipeId);

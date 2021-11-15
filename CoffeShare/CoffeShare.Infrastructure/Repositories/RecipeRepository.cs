@@ -16,6 +16,7 @@ namespace CoffeeShare.Infrastructure.Repositories
             _context = context;
         }
 
+
         public async Task<List<Recipe>> GetAllRecipes()
             => await _context.Recipes.Include(x => x.Coffee).ToListAsync();
 
