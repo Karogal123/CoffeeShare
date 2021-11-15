@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CoffeeShare.Infrastructure.Repositories.Interfaces;
 using CoffeeShare.Infrastructure.Services.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace CoffeeShare.Infrastructure.Services
 {

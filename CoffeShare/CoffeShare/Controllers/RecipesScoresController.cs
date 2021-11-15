@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Dto;
 using CoffeeShare.Infrastructure.Services.Interfaces;
+using Microsoft.AspNet.Identity;
 
 namespace CoffeeShare.Controllers
 {
@@ -38,6 +39,8 @@ namespace CoffeeShare.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRecipeScore(RecipeScoreDto recipeScoreDto)
         {
+            var userId = IdentityExtensions.GetUserId(User.Identity);
+            recipeScoreDto.UserId = int.Parse(userId);
             await _recipeScoreService.CreateRecipeScore(recipeScoreDto);
             return Ok();
         }

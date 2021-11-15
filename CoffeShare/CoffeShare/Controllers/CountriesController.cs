@@ -27,8 +27,7 @@ namespace CoffeeShare.Controllers
         public async Task<IActionResult> GetAllCountries()
         {
             var countries = await _countryService.GetAllCountries();
-            var xd = await _userManager.FindByNameAsync(User.Identity.Name);
-            return Ok(xd);
+            return Ok(countries);
         }
     }
 }

@@ -57,7 +57,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Updatetag(int id, TagDto tagDto)
+        public async Task<IActionResult> UpdateTag(int id, TagDto tagDto)
         {
             var tag = await _tagService.GetTagById(id);
             if (tag is null)

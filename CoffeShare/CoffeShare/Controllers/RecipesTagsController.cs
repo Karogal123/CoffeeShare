@@ -34,9 +34,9 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRecipeScore(RecipeTagDto recipetagDto)
+        public async Task<IActionResult> CreateRecipeScore(RecipeTagDto recipeTagDto)
         {
-            await _recipeTagService.CreateRecipeTag(recipetagDto);
+            await _recipeTagService.CreateRecipeTag(recipeTagDto);
             return Ok();
         }
 

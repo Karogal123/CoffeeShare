@@ -60,7 +60,7 @@ namespace CoffeeShare.Controllers
             return BadRequest();
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("Logout")]
         public async Task<IActionResult> Logout()
         {
