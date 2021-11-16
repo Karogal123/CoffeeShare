@@ -1,1 +1,3 @@
 Folder CoffeShare, default project: Inf.
+
+dotnet ef migrations add TestMigration --project C:\CoffeeShare\CoffeShare\CoffeShare.Infrastructure

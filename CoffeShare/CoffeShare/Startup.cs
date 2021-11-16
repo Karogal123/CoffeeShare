@@ -15,6 +15,8 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Text;
 using CoffeeShare.Core.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace CoffeeShare
 {
@@ -63,6 +65,19 @@ namespace CoffeeShare
                     });
 
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
+            JsonConvert.DefaultSettings = (() =>
+            {
+                var settings = new JsonSerializerSettings();
+                settings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
+                return settings;
+            });
 
         }
 
@@ -85,7 +100,7 @@ namespace CoffeeShare
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
 

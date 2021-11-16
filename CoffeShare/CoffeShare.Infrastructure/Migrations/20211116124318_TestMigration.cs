@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace CoffeeShare.Infrastructure.Migrations
 {
-    public partial class AuthUpdateMigration : Migration
+    public partial class TestMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,28 +195,6 @@ namespace CoffeeShare.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Recipes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RecipeBody = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    IntendedUse = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Recipes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Recipes_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Coffees",
                 columns: table => new
                 {
@@ -243,6 +221,35 @@ namespace CoffeeShare.Infrastructure.Migrations
                         name: "FK_Coffees_Manufacturers_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Recipes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RecipeBody = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CoffeeId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    IntendedUse = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Recipes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Recipes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Recipes_Coffees_CoffeeId",
+                        column: x => x.CoffeeId,
+                        principalTable: "Coffees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -387,6 +394,11 @@ namespace CoffeeShare.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Recipes_CoffeeId",
+                table: "Recipes",
+                column: "CoffeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Recipes_UserId",
                 table: "Recipes",
                 column: "UserId");
@@ -430,9 +442,6 @@ namespace CoffeeShare.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Coffees");
-
-            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -445,12 +454,6 @@ namespace CoffeeShare.Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Countries");
-
-            migrationBuilder.DropTable(
-                name: "Manufacturers");
-
-            migrationBuilder.DropTable(
                 name: "Recipes");
 
             migrationBuilder.DropTable(
@@ -458,6 +461,15 @@ namespace CoffeeShare.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Coffees");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Manufacturers");
         }
     }
 }

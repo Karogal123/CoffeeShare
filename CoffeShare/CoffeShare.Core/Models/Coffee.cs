@@ -1,4 +1,7 @@
-﻿namespace CoffeeShare.Core.Models
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace CoffeeShare.Core.Models
 {
     public class Coffee
     {

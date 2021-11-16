@@ -4,10 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CoffeeShare.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace CoffeeShare.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("Coffee")]
     public class CoffeesController : ControllerBase
