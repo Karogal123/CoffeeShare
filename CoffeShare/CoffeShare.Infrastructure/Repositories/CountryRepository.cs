@@ -1,6 +1,7 @@
 ﻿using CoffeeShare.Core.Models;
 using CoffeeShare.Infrastructure.DataContext;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using CoffeeShare.Infrastructure.Repositories.Interfaces;
@@ -17,6 +18,6 @@ namespace CoffeeShare.Infrastructure.Repositories
         }
 
         public async Task<List<Country>> GetAllCountries()
-            => await _context.Countries.ToListAsync();
+            => await _context.Countries.OrderBy(x => x.Name).ToListAsync();
     }
 }

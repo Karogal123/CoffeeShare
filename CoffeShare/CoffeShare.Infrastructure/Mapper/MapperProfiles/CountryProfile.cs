@@ -9,6 +9,7 @@ namespace CoffeeShare.Infrastructure.Mapper.MapperProfiles
         public CountryProfile()
         {
             CreateMap<Country, CountryDto>();
+            CreateMap<CountryDto, Country>();
         }
     }
 }

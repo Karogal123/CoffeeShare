@@ -9,18 +9,16 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CoffeeShare.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("Countries")]
     public class CountriesController : ControllerBase
     {
         private readonly ICountryService _countryService;
-        private readonly Microsoft.AspNetCore.Identity.UserManager<User> _userManager;
 
-        public CountriesController(ICountryService service, Microsoft.AspNetCore.Identity.UserManager<User> userManager)
+
+        public CountriesController(ICountryService countryService)
         {
-            _countryService = service;
-            _userManager = userManager;
+            _countryService = countryService;
         }
 
         [HttpGet]

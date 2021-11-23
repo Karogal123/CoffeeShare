@@ -3,6 +3,7 @@ using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -18,10 +19,10 @@ namespace CoffeeShare.Infrastructure.Repositories
         }
 
         public async Task<List<Manufacturer>> GetAllManufacturers()
-            => await _context.Manufacturers.ToListAsync();
+            => await _context.Manufacturers.AsNoTracking().OrderBy(x => x.Name).ToListAsync();
 
         public async Task<Manufacturer> GetManufacturerById(int id)
-            => await _context.Manufacturers.SingleOrDefaultAsync(x => x.Id == id);
+            => await _context.Manufacturers.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task CreateManufacturer(Manufacturer manufacturer)
         {

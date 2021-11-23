@@ -13,7 +13,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using CoffeeShare.Core.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -72,13 +74,6 @@ namespace CoffeeShare
                         .AllowAnyMethod()
                         .AllowAnyHeader());
             });
-            JsonConvert.DefaultSettings = (() =>
-            {
-                var settings = new JsonSerializerSettings();
-                settings.Converters.Add(new StringEnumConverter { CamelCaseText = true });
-                return settings;
-            });
-
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -108,6 +103,17 @@ namespace CoffeeShare
             {
                 endpoints.MapControllers();
             });
+            //Task.Run(() => this.CreateRoles(roleManager)).Wait();
         }
+        //private async Task CreateRoles(RoleManager<IdentityRole> roleManager)
+        //{
+        //    foreach (string rol in this.Configuration.GetSection("Roles").Get<List<string>>())
+        //    {
+        //        if (!await roleManager.RoleExistsAsync(rol))
+        //        {
+        //            await roleManager.CreateAsync(new IdentityRole(rol));
+        //        }
+        //    }
+        //}
     }
 }

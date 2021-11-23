@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CoffeeShare.Core.Dto;
 using Microsoft.AspNetCore.Identity;
 
 namespace CoffeeShare.Controllers
@@ -25,11 +26,11 @@ namespace CoffeeShare.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login(string email, string password)
+        public async Task<IActionResult> Login(UserDto userDto)
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(email, password, true, false);
+                var result = await _signInManager.PasswordSignInAsync(userDto.Email, userDto.Password, false, false);
                 if (result.Succeeded)
                 {
                     return Ok();
@@ -45,12 +46,12 @@ namespace CoffeeShare.Controllers
 
         [HttpPost]
         [Route("Register")]
-        public async Task<IActionResult> Register(string email, string password)
+        public async Task<IActionResult> Register(UserDto userDto)
         {
             if (ModelState.IsValid)
             {
-                var user = new User() {UserName = email, Email = email};
-                var result = await _userManager.CreateAsync(user, password);
+                var user = new User() {UserName = userDto.Email, Email = userDto.Email};
+                var result = await _userManager.CreateAsync(user, userDto.Password);
                 if (result.Succeeded)
                 {
                     return Ok();
