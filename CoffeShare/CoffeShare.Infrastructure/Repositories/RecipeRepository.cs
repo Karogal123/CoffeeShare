@@ -18,10 +18,10 @@ namespace CoffeeShare.Infrastructure.Repositories
 
 
         public async Task<List<Recipe>> GetAllRecipes()
-            => await _context.Recipes.Include(x => x.Coffee).ToListAsync();
+            => await _context.Recipes.AsNoTracking().Include(x => x.User).Include(x => x.Coffee).ThenInclude(x => x.Manufacturer).ToListAsync();
 
         public async Task<Recipe> GetRecipeById(int id)
-            => await _context.Recipes.Include(x => x.Coffee).SingleOrDefaultAsync(x => x.Id == id);
+            => await _context.Recipes.AsNoTracking().Include(x => x.User).Include(x => x.Coffee).ThenInclude(x => x.Manufacturer).SingleOrDefaultAsync(x => x.Id == id);
 
         public async Task CreateRecipe(Recipe recipe)
         {

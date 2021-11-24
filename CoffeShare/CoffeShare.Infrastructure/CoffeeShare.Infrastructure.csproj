@@ -24,4 +24,8 @@
     <ProjectReference Include="..\CoffeShare.Core\CoffeeShare.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Images\" />
+  </ItemGroup>
+
 </Project>
