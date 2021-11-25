@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Models;
+using CoffeeShare.Jwt;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -39,6 +40,25 @@ namespace CoffeeShare
             services.AddIdentity<User, UserRole>(cfg => 
                     cfg.User.RequireUniqueEmail = true)
                 .AddEntityFrameworkStores<CoffeeContext>();
+            var jwtSettings = Configuration.GetSection("JwtSettings");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                };
+            });
+            services.AddScoped<JwtHandler>();
             services.AddOptions();
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoffeeShare.Controllers
 {
     [ApiController]
+    
     [Route("Recipes")]
     public class RecipesController : ControllerBase
     {

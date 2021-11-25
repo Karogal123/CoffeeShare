@@ -4,14 +4,16 @@ using CoffeeShare.Infrastructure.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoffeeShare.Infrastructure.Migrations
 {
     [DbContext(typeof(CoffeeContext))]
-    partial class CoffeeContextModelSnapshot : ModelSnapshot
+    [Migration("20211124161756_RolesMigration")]
+    partial class RolesMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -428,19 +430,38 @@ namespace CoffeeShare.Infrastructure.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityRole");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            ConcurrencyStamp = "972cd5ef-9783-4ccd-91cb-6d98bb381884",
+                            Id = "473d5084-673e-4618-af7a-0f9416b81ce1",
+                            ConcurrencyStamp = "8503d8a2-0b2c-43ec-b917-8b167e5ab421",
                             Name = "Default",
                             NormalizedName = "DEFAULT"
                         },
                         new
                         {
-                            Id = 2,
-                            ConcurrencyStamp = "1352e3a0-f559-4fa8-8fdf-7ccc3a6f420f",
+                            Id = "d5050ed7-3b56-4108-8a45-772ffdf6aa3b",
+                            ConcurrencyStamp = "55a6c6ab-74b6-4371-b5ea-d80bd3989753",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

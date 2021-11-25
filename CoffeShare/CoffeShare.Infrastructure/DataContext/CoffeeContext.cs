@@ -50,6 +50,9 @@ namespace CoffeeShare.Infrastructure.DataContext
                 new Country { Id = 24, Name = "Zimbabwe" },
                 new Country { Id = 25, Name = "Zambia" }
             );
+            modelBuilder.Entity<UserRole>().HasData(
+                new UserRole { Id = 1, Name = "Default", NormalizedName = "DEFAULT"},
+                new UserRole { Id = 2, Name = "Admin", NormalizedName = "ADMIN"});
             base.OnModelCreating(modelBuilder);
         }
     }
