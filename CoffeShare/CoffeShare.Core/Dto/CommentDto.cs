@@ -1,4 +1,5 @@
-﻿using CoffeeShare.Core.Models;
+﻿using System;
+using CoffeeShare.Core.Models;
 
 namespace CoffeeShare.Core.Dto
 {
@@ -10,5 +11,6 @@ namespace CoffeeShare.Core.Dto
         public int RecipeId { get; set; }
         public RecipeDto Recipe { get; set; }
         public string CommentBody { get; set; }
+        public DateTime CreatedDate { get; set; }
     }
 }

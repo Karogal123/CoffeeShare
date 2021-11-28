@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using CoffeeShare.Core.Dto;
 using CoffeeShare.Infrastructure.Services;
@@ -6,8 +7,11 @@ using CoffeeShare.Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Models;
+using CoffeeShare.Infrastructure.DataContext;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 
 namespace CoffeeShare.Controllers
 {
@@ -17,12 +21,14 @@ namespace CoffeeShare.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
-        private readonly Microsoft.AspNetCore.Identity.UserManager<User> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly CoffeeContext _context;
 
-        public RecipesController(IRecipeService recipeService, Microsoft.AspNetCore.Identity.UserManager<User> userManager)
+        public RecipesController(IRecipeService recipeService, IHttpContextAccessor httpContextAccessor, CoffeeContext context)
         {
             _recipeService = recipeService;
-            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+            _context = context;
         }
 
         [HttpGet]
@@ -32,7 +38,8 @@ namespace CoffeeShare.Controllers
             return Ok(recipes);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetById/{id}")]
         public async Task<IActionResult> GetRecipeById(int id)
         {
             var recipe = await _recipeService.GetRecipeById(id);
@@ -47,8 +54,9 @@ namespace CoffeeShare.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRecipe(RecipeDto recipeDto)
         {
-            var userId = IdentityExtensions.GetUserId(User.Identity);
-            recipeDto.UserId = int.Parse(userId);
+            var claims = User.Claims.FirstOrDefault();
+            var user = _context.Users.SingleOrDefault(x => x.Email == claims.Value);
+            recipeDto.UserId = user.Id;
             await _recipeService.CreateRecipe(recipeDto);
             return CreatedAtAction(nameof(GetRecipeById), new { Id = recipeDto.Id }, recipeDto);
         }

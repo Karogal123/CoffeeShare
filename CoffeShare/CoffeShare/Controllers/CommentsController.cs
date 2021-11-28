@@ -1,8 +1,10 @@
 ﻿using CoffeeShare.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Dto;
+using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.Services.Interfaces;
 using Microsoft.AspNet.Identity;
 
@@ -13,10 +15,12 @@ namespace CoffeeShare.Controllers
     public class CommentsController : ControllerBase
     {
         private readonly ICommentService _commentService;
+        private readonly CoffeeContext _context;
 
-        public CommentsController(ICommentService commentService)
+        public CommentsController(ICommentService commentService, CoffeeContext context)
         {
             _commentService = commentService;
+            _context = context;
         }
 
         [HttpGet]
@@ -29,8 +33,9 @@ namespace CoffeeShare.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateComment(CommentDto commentDto)
         {
-            var userId = IdentityExtensions.GetUserId(User.Identity);
-            commentDto.UserId = int.Parse(userId);
+            var claims = User.Claims.FirstOrDefault();
+            var user = _context.Users.SingleOrDefault(x => x.Email == claims.Value);
+            commentDto.UserId = user.Id;
             await _commentService.CreateComment(commentDto);
             return Ok();
         }

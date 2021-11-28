@@ -6,11 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Dto;
+using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Jwt;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoffeeShare.Controllers
 {
@@ -19,14 +23,16 @@ namespace CoffeeShare.Controllers
     public class UsersController : ControllerBase
     {
         private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
+        private readonly Microsoft.AspNetCore.Identity.UserManager<User> _userManager;
         private readonly JwtHandler _jwtHandler;
+        private readonly CoffeeContext _context;
 
-        public UsersController(SignInManager<User> signInManager, UserManager<User> userManager, JwtHandler jwtHandler)
+        public UsersController(SignInManager<User> signInManager, Microsoft.AspNetCore.Identity.UserManager<User> userManager, JwtHandler jwtHandler, CoffeeContext context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _jwtHandler = jwtHandler;
+            _context = context;
         }
 
         [HttpPost]
@@ -38,9 +44,14 @@ namespace CoffeeShare.Controllers
             var claims = await _jwtHandler.GetClaims(user);
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            await _signInManager.PasswordSignInAsync(userDto.Email, userDto.Password, false, false);
-            return Ok(new AuthResponseDto {IsAuthSuccessful = true, Token = token});
+            var result = await _signInManager.PasswordSignInAsync(userDto.Email, userDto.Password, true, false);
+            if (result.Succeeded)
+            { 
+                return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
             }
+
+            return BadRequest();
+        }
         
         [HttpPost]
         [Route("Register")]
@@ -81,6 +92,16 @@ namespace CoffeeShare.Controllers
                 .ToList();
 
             return Ok(claims);
+        }
+
+        [HttpGet("GetUserId")]
+        [Authorize]
+        public async  Task<IActionResult> GetUserId()
+        {
+            var claims = User.Claims.FirstOrDefault();
+            var claimValue = claims.Value;
+            var user = _context.Users.SingleOrDefault(x => x.Email == claimValue);
+            return Ok(user.Id);
         }
     }
 }

@@ -18,6 +18,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Models;
 using CoffeeShare.Jwt;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -61,6 +63,7 @@ namespace CoffeeShare
             services.AddScoped<JwtHandler>();
             services.AddOptions();
             services.AddControllers();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CoffeeShare", Version = "v1" });

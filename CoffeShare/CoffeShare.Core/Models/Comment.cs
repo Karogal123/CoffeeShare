@@ -1,4 +1,6 @@
-﻿namespace CoffeeShare.Core.Models
+﻿using System;
+
+namespace CoffeeShare.Core.Models
 {
     public class Comment
     {
@@ -8,5 +10,6 @@
         public int RecipeId { get; set; }
         public Recipe Recipe { get; set; }
         public string CommentBody { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.Now;
     }
 }

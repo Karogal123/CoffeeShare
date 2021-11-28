@@ -9,7 +9,8 @@ namespace CoffeeShare.Infrastructure.Mapper.MapperProfiles
         public CommentProfile()
         {
             CreateMap<Comment, CommentDto>();
-            CreateMap<CommentDto, Comment>();
+            CreateMap<CommentDto, Comment>()
+                .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom<CommentResolver>());
         }
     }
 }
