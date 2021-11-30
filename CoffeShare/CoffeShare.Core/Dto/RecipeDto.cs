@@ -12,5 +12,9 @@ namespace CoffeeShare.Core.Dto
         public IntendedUse IntendedUse { get; set; }
         public int CoffeeId { get; set; }
         public Coffee Coffee { get; set; }
+        public int CoffeeAmount { get; set; }
+        public GrindLevel GrindLevel { get; set; }
+        public int WaterAmount { get; set; }
+        public int WaterTemperature { get; set; }
     }
 }

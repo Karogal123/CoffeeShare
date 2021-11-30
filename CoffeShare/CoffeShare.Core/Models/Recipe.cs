@@ -10,5 +10,9 @@
         public int UserId { get; set; }
         public User User { get; set; }
         public IntendedUse IntendedUse { get; set; }
+        public int CoffeeAmount { get; set; }
+        public GrindLevel GrindLevel { get; set; }
+        public int WaterAmount { get; set; }
+        public int WaterTemperature { get; set; }
     }
 }
