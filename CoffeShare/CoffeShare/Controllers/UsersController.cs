@@ -39,37 +39,38 @@ namespace CoffeeShare.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login(UserDto userDto)
         {
-            var user = await _userManager.FindByNameAsync(userDto.Email);
-            var signingCredentials = _jwtHandler.GetSigningCredentials();
-            var claims = await _jwtHandler.GetClaims(user);
-            var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             var result = await _signInManager.PasswordSignInAsync(userDto.Email, userDto.Password, true, false);
             if (result.Succeeded)
-            { 
+            {
+                var user = await _userManager.FindByNameAsync(userDto.Email);
+                var signingCredentials = _jwtHandler.GetSigningCredentials();
+                var claims = await _jwtHandler.GetClaims(user);
+                var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
+                var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
                 return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
             }
-
-            return BadRequest();
+            return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
         }
         
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Register(UserDto userDto)
         {
-            if (ModelState.IsValid)
-            {
-                var user = new User() {UserName = userDto.Email, Email = userDto.Email};
-                var result = await _userManager.CreateAsync(user, userDto.Password);
-                await _userManager.AddToRoleAsync(user, "Default");
-                if (result.Succeeded)
-                {
-                    return Ok();
-                }
-            }
+            if(userDto == null || !ModelState.IsValid)
+                return BadRequest();
 
-            return BadRequest();
+            var user = new User() {UserName = userDto.Email, Email = userDto.Email};
+            var result = await _userManager.CreateAsync(user, userDto.Password);
+            if (!result.Succeeded)
+            {
+                    var errors = result.Errors.Select(e => e.Description);
+                    return BadRequest(new RegistrationResponseDto { Errors = errors });
+            }
+            await _userManager.AddToRoleAsync(user, "Default");
+            return Ok();
         }
+            
+            
 
         [HttpGet]
         [Route("Logout")]

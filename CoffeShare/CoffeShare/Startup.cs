@@ -39,8 +39,15 @@ namespace CoffeeShare
         {
             services.AddDbContext<CoffeeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("CoffeeConnection"),
                 b => b.MigrationsAssembly("CoffeeShare.Infrastructure")));
-            services.AddIdentity<User, UserRole>(cfg => 
-                    cfg.User.RequireUniqueEmail = true)
+            services.AddIdentity<User, UserRole>(cfg =>
+                {
+                    cfg.User.RequireUniqueEmail = true;
+                    cfg.Password.RequireNonAlphanumeric = false;
+                    cfg.Password.RequireDigit = true;
+                    cfg.Password.RequireUppercase = true;
+                    cfg.Password.RequireLowercase = true;
+                    cfg.Password.RequiredLength = 6;
+                })
                 .AddEntityFrameworkStores<CoffeeContext>();
             var jwtSettings = Configuration.GetSection("JwtSettings");
             services.AddAuthentication(opt =>

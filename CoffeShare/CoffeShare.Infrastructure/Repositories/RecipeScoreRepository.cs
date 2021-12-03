@@ -26,13 +26,23 @@ namespace CoffeeShare.Infrastructure.Repositories
         
         public async Task CreateRecipeScore(RecipeScore recipeScore)
         {
+            var userScores = _context.RecipeScores.Where(x => x.UserId == recipeScore.UserId);
+            if (userScores.Any(x => (x.RecipeId == recipeScore.RecipeId)))
+            {
+                var scoreInDb = await _context.RecipeScores.SingleOrDefaultAsync(x =>
+                    x.UserId == recipeScore.UserId && x.RecipeId == recipeScore.RecipeId);
+                scoreInDb.Score = recipeScore.Score;
+                await UpdateRecipeScore(scoreInDb);
+                await _context.SaveChangesAsync();
+                return;
+            }
             await _context.AddAsync(recipeScore);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateRecipeScore(RecipeScore recipeScore)
         {
-            _context.RecipeScores.Remove(recipeScore);
+            _context.RecipeScores.Update(recipeScore);
             await _context.SaveChangesAsync();
         }
     }

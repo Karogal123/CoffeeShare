@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Dto;
+using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.Services.Interfaces;
 using Microsoft.AspNet.Identity;
 
@@ -16,11 +17,13 @@ namespace CoffeeShare.Controllers
     {
         private readonly IRecipeScoreService _recipeScoreService;
         private readonly IRecipeService _recipeService;
+        private readonly CoffeeContext _context;
 
-        public RecipesScoresController(IRecipeScoreService recipeScoreService, IRecipeService recipeService)
+        public RecipesScoresController(IRecipeScoreService recipeScoreService, IRecipeService recipeService, CoffeeContext context)
         {
             _recipeScoreService = recipeScoreService;
             _recipeService = recipeService;
+            _context = context;
         }
 
         [HttpGet]
@@ -39,8 +42,9 @@ namespace CoffeeShare.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRecipeScore(RecipeScoreDto recipeScoreDto)
         {
-            var userId = IdentityExtensions.GetUserId(User.Identity);
-            recipeScoreDto.UserId = int.Parse(userId);
+            var claims = User.Claims.FirstOrDefault();
+            var user = _context.Users.SingleOrDefault(x => x.Email == claims.Value);
+            recipeScoreDto.UserId = user.Id;
             await _recipeScoreService.CreateRecipeScore(recipeScoreDto);
             return Ok();
         }
