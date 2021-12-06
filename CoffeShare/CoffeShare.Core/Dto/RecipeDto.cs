@@ -1,4 +1,5 @@
-﻿using CoffeeShare.Core.Models;
+﻿using System.Collections.Generic;
+using CoffeeShare.Core.Models;
 
 namespace CoffeeShare.Core.Dto
 {

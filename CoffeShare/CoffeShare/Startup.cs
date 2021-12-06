@@ -14,11 +14,16 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Models;
+using CoffeeShare.Infrastructure.Validation;
 using CoffeeShare.Jwt;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -67,6 +72,26 @@ namespace CoffeeShare
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
                 };
             });
+            services.AddMvc().AddFluentValidation(opt => opt.RegisterValidatorsFromAssemblyContaining<ManufacturerValidation>());
+            services.Configure<ApiBehaviorOptions>(opt =>
+            {
+                opt.InvalidModelStateResponseFactory = (context) =>
+                {
+                    var errors = context.ModelState
+                        .Values
+                        .SelectMany(x => x.Errors
+                            .Select(p => p.ErrorMessage))
+                        .ToList();
+
+                    var result = new
+                    {
+                        Errors = errors
+                    };
+
+                    return new BadRequestObjectResult(result);
+                };
+            });
+            ValidatorOptions.Global.LanguageManager.Enabled = false;
             services.AddScoped<JwtHandler>();
             services.AddOptions();
             services.AddControllers();

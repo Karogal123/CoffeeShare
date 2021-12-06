@@ -15,7 +15,7 @@ namespace CoffeeShare.Infrastructure.Validation
             RuleFor(x => x.Name)
                 .NotEmpty()
                 .MinimumLength(3)
-                .MinimumLength(30);
+                .MaximumLength(30);
         }
     }
 }
