@@ -19,8 +19,6 @@ namespace CoffeeShare.Infrastructure.DataContext
         public DbSet<Manufacturer> Manufacturers { get; set; }
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<RecipeScore> RecipeScores { get; set; }
-        public DbSet<RecipeTag> RecipeTags { get; set; }
-        public DbSet<Tag> Tags { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Country>().HasData(
