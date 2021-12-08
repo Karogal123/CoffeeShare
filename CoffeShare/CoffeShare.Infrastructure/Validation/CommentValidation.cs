@@ -14,8 +14,8 @@ namespace CoffeeShare.Infrastructure.Validation
         {
             RuleFor(x => x.CommentBody)
                 .NotEmpty()
-                .MinimumLength(10)
-                .MinimumLength(150);
+                .MinimumLength(5)
+                .MaximumLength(150);
         }
     }
 }

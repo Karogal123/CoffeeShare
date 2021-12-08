@@ -13,9 +13,9 @@ namespace CoffeeShare.Infrastructure.Validation
         public RecipeScoreValidation()
         {
             RuleFor(x => x.Score)
-                .GreaterThan(0)
-                .LessThan(11)
-                .WithMessage("Score can not be lower than 0 and greater than 10");
+                .GreaterThanOrEqualTo(1)
+                .LessThanOrEqualTo(10)
+                .NotEmpty();
         }
     }
 }
