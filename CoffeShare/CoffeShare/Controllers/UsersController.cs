@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Dto;
 using CoffeeShare.Infrastructure.DataContext;
@@ -99,6 +100,10 @@ namespace CoffeeShare.Controllers
         public async  Task<IActionResult> GetUserId()
         {
             var claims = User.Claims.FirstOrDefault();
+            if (claims == null)
+            {
+                return BadRequest();
+            }
             var claimValue = claims.Value;
             var user = _context.Users.SingleOrDefault(x => x.Email == claimValue);
             return Ok(user.Id);
