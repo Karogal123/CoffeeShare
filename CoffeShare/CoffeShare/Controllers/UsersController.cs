@@ -96,7 +96,6 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpGet("GetUserId")]
-        [Authorize]
         public async  Task<IActionResult> GetUserId()
         {
             var claims = User.Claims.FirstOrDefault();
