@@ -16,13 +16,13 @@ namespace CoffeeShare.Infrastructure.Validation
                 .NotEmpty()
                 .MinimumLength(5)
                 .WithMessage("Your recipe name is too short")
-                .MaximumLength(30)
+                .MaximumLength(50)
                 .WithMessage("Your recipe name is too long");
 
             RuleFor(x => x.RecipeBody)
                 .MinimumLength(30)
                 .WithMessage("Your recipe body is too short")
-                .MaximumLength(500)
+                .MaximumLength(2000)
                 .WithMessage("Your recipe body is too long")
                 .NotEmpty();
 

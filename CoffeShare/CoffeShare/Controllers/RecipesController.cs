@@ -16,7 +16,6 @@ using Microsoft.AspNetCore.Identity;
 namespace CoffeeShare.Controllers
 {
     [ApiController]
-    
     [Route("Recipes")]
     public class RecipesController : ControllerBase
     {
@@ -52,6 +51,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateRecipe(RecipeDto recipeDto)
         {
             var claims = User.Claims.FirstOrDefault();
@@ -62,6 +62,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteRecipe(int id)
         {
             var recipe = await _recipeService.GetRecipeById(id);
@@ -75,8 +76,16 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateRecipe(int id, RecipeDto recipeDto)
         {
+            var admins = _context.UserRoles.Where(x => x.RoleId == 2).Select(x => x.UserId);
+            var claims = User.Claims.FirstOrDefault();
+            var user = _context.Users.SingleOrDefault(x => x.Email == claims.Value);
+            if (recipeDto.UserId != user.Id)
+            {
+                throw new Exception("Unauthorized action");
+            }
             var recipe = await _recipeService.GetRecipeById(id);
             if (recipe is null)
             {

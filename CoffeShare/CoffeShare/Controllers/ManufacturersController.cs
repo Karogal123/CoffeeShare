@@ -21,6 +21,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllManufacturers()
         {
             var manufacturers = await _manufacturerService.GetAllManufacturers();
@@ -40,6 +41,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateManufacturer(ManufacturerDto manufacturerDto)
         {
             await _manufacturerService.CreateManufacturer(manufacturerDto);
@@ -47,6 +49,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteManufacturer(int id)
         {
             var manufacturer = await _manufacturerService.GetManufacturerById(id);
@@ -59,6 +62,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateManufacturer(int id, ManufacturerDto manufacturerDto)
         {
             var manufacturer = await _manufacturerService.GetManufacturerById(id);

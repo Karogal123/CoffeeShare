@@ -19,6 +19,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllCoffees()
         {
             var coffees = await _coffeeService.GetAllCoffees();
@@ -26,6 +27,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetCoffeeById(int id)
         {
             var coffee = await _coffeeService.GetCoffeeById(id);
@@ -38,6 +40,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateCoffee(CoffeeDto coffeeDto)
         {
             await _coffeeService.CreateCoffee(coffeeDto);
@@ -45,6 +48,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteCoffee(int id)
         {
             var coffeeDto = await _coffeeService.GetCoffeeById(id);
@@ -58,6 +62,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateCoffee(CoffeeDto coffeeDto, int id)
         {
             var coffee = await _coffeeService.GetCoffeeById(id);

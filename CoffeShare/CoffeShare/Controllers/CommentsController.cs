@@ -1,12 +1,14 @@
 ﻿using CoffeeShare.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using CoffeeShare.Core.Dto;
 using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.Services.Interfaces;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoffeeShare.Controllers
 {
@@ -31,6 +33,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateComment(CommentDto commentDto)
         {
             var claims = User.Claims.FirstOrDefault();
@@ -41,6 +44,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteComment(int id)
         {
             var comment = await _commentService.GetCommentById(id);
@@ -48,7 +52,6 @@ namespace CoffeeShare.Controllers
             {
                 return NotFound();
             }
-
             await _commentService.DeleteCoffee(comment);
             return Ok();
         }

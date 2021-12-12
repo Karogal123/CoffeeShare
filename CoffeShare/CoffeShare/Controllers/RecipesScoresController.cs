@@ -8,6 +8,7 @@ using CoffeeShare.Core.Dto;
 using CoffeeShare.Infrastructure.DataContext;
 using CoffeeShare.Infrastructure.Services.Interfaces;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoffeeShare.Controllers
 {
@@ -40,6 +41,7 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateRecipeScore(RecipeScoreDto recipeScoreDto)
         {
             var claims = User.Claims.FirstOrDefault();
@@ -50,8 +52,15 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateRecipeScore(RecipeScoreDto recipeScoreDto, int id)
         {
+            var claims = User.Claims.FirstOrDefault();
+            var user = _context.Users.SingleOrDefault(x => x.Email == claims.Value);
+            if (user.Id != recipeScoreDto.UserId)
+            {
+                throw new Exception("Unauthorized action");
+            }
             var recipeScore = await _recipeScoreService.GetRecipeScoreById(id);
             if (recipeScore is null)
             {
