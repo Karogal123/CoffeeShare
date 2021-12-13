@@ -13,6 +13,5 @@ namespace CoffeeShare.Core.Dto
         public BeansProcessing BeansProcessing { get; set; }
         public DegreeOfRoasting DegreeOfRoasting { get; set; }
         public BeanType BeanType { get; set; }
-        public string ImgUrl { get; set; }
     }
 }

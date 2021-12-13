@@ -19,7 +19,6 @@ namespace CoffeeShare.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllCoffees()
         {
             var coffees = await _coffeeService.GetAllCoffees();
